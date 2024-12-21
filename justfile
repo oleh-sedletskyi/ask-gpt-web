@@ -8,11 +8,17 @@ run:
 nrepl:
     clojure -M:dev -m nrepl.cmdline
 
-format_check:
-    clojure -M:format -m cljfmt.main check src dev test
+format-check:
+    clojure -M:format -m cljfmt.main check src
 
 format:
-    clojure -M:format -m cljfmt.main fix src dev test
+    clojure -M:format -m cljfmt.main fix src
 
 lint:
     clojure -M:lint -m clj-kondo.main --lint .
+
+clean-build:
+    clj -T:build clean
+
+build-uber:
+    clj -T:build uber
