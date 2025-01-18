@@ -1,0 +1,29 @@
+{:tasks
+ {:requires ([babashka.fs :as fs])
+  start-jar {:task (do
+                     (shell "cp .env target/.env")
+                     (let [jar-file (->> (fs/glob "target" "ask-gpt*.jar")
+                                         first
+                                         str)]
+                       (shell (str "java -jar " jar-file))))
+             :doc "Run from uberjar"}
+  start {:doc "start main"
+         :task (shell "clojure -M -m gpt.main")}
+  format {:doc "fix format"
+          :task (shell "clojure -M:format -m cljfmt.main fix src")}
+  check-format {:doc "check project formatting"
+                :task (shell "clojure -M:format -m cljfmt.main check src")}
+  build-uber {:doc "build uberjar"
+              :task (shell "clj -T:build uber")}
+  clean-build {:doc "clean build artifacts"
+               :task (shell "clj -T:build clean")}
+  nrepl {:doc "run nrepl +flowstorm profile"
+         :task (shell "clojure -M:flowstorm:dev -m nrepl.cmdline")}
+  nrepl-no-flowstorm {:doc "start nrepl"
+                      :task (shell "clojure -M:dev -m nrepl.cmdline")}
+  outdated {:doc "check for outdated libs"
+            :task (shell "clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version \"RELEASE\"}}}' -M -m antq.core")}
+  test {:doc "run tests"
+        :task (shell "clojure -M:dev -m kaocha.runner")}
+  ;;
+  }}

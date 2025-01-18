@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%; /* Make textarea take full width */
+    height: auto; /* Adjust height as needed */
+    padding: 10px; /* Add some padding for better appearance */
+    border: 1px solid #ccc; /* Border style */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1.5em; /* Font size */
+    resize: none; /* Disable resizing if you want fixed size */
+}
+
+input[type="submit"] {
+    flex: 1; /* Allow buttons to grow and take equal space */
+    width: 45%;
+    padding: 15px; /* Padding for the buttons */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #007BFF; /* Bootstrap primary color */
+    color: white; /* Text color */
+    font-size: 1.5em; /* Font size */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+@media (max-width: 600px) {
+    textarea {
+        font-size: 2em; /* Adjust font size for smaller screens */
+    }
+}
