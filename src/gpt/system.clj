@@ -5,6 +5,8 @@
   (:import (io.github.cdimascio.dotenv Dotenv)
            (org.eclipse.jetty.server Server)))
 
+(set! *warn-on-reflection* true)
+
 (defn start-cookie-store
   []
   (session-cookie/cookie-store))

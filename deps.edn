@@ -4,13 +4,15 @@
         ring/ring {:mvn/version "1.13.0"}
         ;; Routing
         metosin/reitit-ring {:mvn/version "0.7.2"}
+        ;; Reitit all modules
+        metosin/reitit {:mvn/version "0.7.2"}
         ;; Logging Facade
         org.clojure/tools.logging {:mvn/version "1.3.0"}
         ;; Logging Implementation
         org.slf4j/slf4j-simple {:mvn/version "2.0.16"}
         ;; HTML Generation
         hiccup/hiccup {:mvn/version "2.0.0-RC4"}
-        ;; Unify Environment Variables + .env Handing
+        ;; Unify Environment Variables + .env Handling
         io.github.cdimascio/dotenv-java {:mvn/version "3.0.2"}
         ;; HTTP Middleware
         ring/ring-defaults {:mvn/version "0.5.0"}
@@ -23,7 +25,13 @@
         ;; handle unix time
         clojure.java-time/clojure.java-time {:mvn/version "1.4.3"}
         ;; markdown to hiccup
-        markdown-to-hiccup/markdown-to-hiccup {:mvn/version "0.6.2"}}
+        markdown-to-hiccup/markdown-to-hiccup {:mvn/version "0.6.2"}
+        ;; Ring middleware that acts as a OAuth 2.0 client
+        ring-oauth2/ring-oauth2 {:mvn/version "0.3.0"}
+        ;; HTTP Statuses
+        metosin/ring-http-response {:mvn/version "0.9.5"}
+        ;; fast HTTP format negotiation, encoding and decoding
+        metosin/muuntaja {:mvn/version "0.6.11"}}
 
  :aliases {:dev
            {:extra-paths ["dev" "test"]

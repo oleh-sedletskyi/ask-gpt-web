@@ -1,6 +1,6 @@
 (ns gpt.middleware
   (:require
-   #_[ring.middleware.defaults :as middleware-defaults]
+   [ring.middleware.defaults :as middleware-defaults]
    [gpt.system :as-alias system]
    [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
    [ring.middleware.content-type :refer [wrap-content-type]]

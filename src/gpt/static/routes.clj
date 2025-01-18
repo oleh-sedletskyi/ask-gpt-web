@@ -5,6 +5,11 @@
   [& _]
   (response/resource-response "/favicon.ico"))
 
+(defn styles-handler
+  [& _]
+  (response/file-response "styles.css"))
+
 (defn routes
   [_]
-  [["/favicon.ico" favicon-ico-handler]])
+  [["/favicon.ico" favicon-ico-handler]
+   ["/styles.css" styles-handler]])
