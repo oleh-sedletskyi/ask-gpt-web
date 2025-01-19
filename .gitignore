@@ -1,6 +1,9 @@
 .env
 .cpcache
 .clj-kondo/.cache
+.clj-kondo/imports
 .lsp
 data
 .nrepl-port
+target
+.DS_Store
