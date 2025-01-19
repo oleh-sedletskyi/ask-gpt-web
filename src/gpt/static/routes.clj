@@ -7,7 +7,7 @@
 
 (defn styles-handler
   [& _]
-  (response/file-response "styles.css"))
+  (response/resource-response "styles.css"))
 
 (defn routes
   [_]
