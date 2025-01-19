@@ -27,5 +27,10 @@ Evaluate `(restart-system!)` to reload routes logic etc.
 ## To start from jar:
 `start-jar`
 
+# Configuration
+Use google developer console to configure your app urls (top level domain and redirect endpoint):
+```https://console.cloud.google.com/auth/clients```
+
 # TODO:
 - Fix styling
+
