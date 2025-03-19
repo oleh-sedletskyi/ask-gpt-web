@@ -8,6 +8,7 @@
    ;; [ring.util.http-response :as http]
    [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
    ;; [reitit.ring.middleware.dev :as dev] ;; debug middleware
+   [tick.core :as t]
    [gpt.ask.routes :as gpt-routes]
    [gpt.oauth.middleware :as oauth-middleware]
    [gpt.system :as-alias system]
@@ -61,7 +62,7 @@
                                         (assoc-in [:session :cookie-attrs :same-site]
                                                   :lax))))]
      (fn root-handler [request]
-       (log/info (str (:request-method request) " - " (:uri request)))
+       (log/info (str (t/now) " " (:request-method request) " - " (:uri request)))
        (handler request)))))
 
 (comment
