@@ -13,7 +13,21 @@
    [gpt.oauth.middleware :as oauth-middleware]
    [gpt.system :as-alias system]
    [hiccup2.core :as h]
-   [reitit.ring :as reitit-ring]))
+   [reitit.ring :as reitit-ring]
+   [clojure.java.io :as io]
+   [ring.util.response :as response]))
+
+(defn serve-pdf-file
+  "Serves a PDF file using File instead of resource"
+  [_request]
+  (let [filename "book.pdf"
+        file (io/file "resources" filename)]
+    (if (.exists file)
+      (-> (response/response (io/input-stream file))
+          (response/content-type "application/pdf")
+          (response/header "Content-Disposition"
+                           (str "attachment; filename=\"" filename "\"")))
+      (response/not-found (str "PDF file not found: " filename)))))
 
 (defn routes
   [system]
@@ -28,6 +42,8 @@
                            (str
                             (h/html
                              [:body
+                              #_[:a {:href "/download-pdf"} "Book"]
+                              #_[:br]
                               (when (get-in request [:flash :layout/message])
                                 [:h3 {:style {:color "green"}}
                                  (get-in request [:flash :layout/message])])
@@ -35,7 +51,8 @@
                               [:br]
                               [:a {:href "/gpt"} "Ask GPT"]
                               [:br]
-                              [:a {:href "/logout"} "Logout"]]))})}}]])
+                              [:a {:href "/logout"} "Logout"]]))})}}]
+   #_["/download-pdf" {:get {:handler serve-pdf-file}}]])
 
 (defn not-found-handler
   [_request]
