@@ -27,7 +27,7 @@
                       "Authorization" (format "Bearer %s" (get-open-ai-key env))}
                      :body
                      (json/encode
-                      {:model "gpt-4o-mini"
+                      {:model "gpt-4.1-2025-04-14"
                        :messages [{:role "system",
                                    :content "You are a helpful assistant."},
                                   {:role "user",
