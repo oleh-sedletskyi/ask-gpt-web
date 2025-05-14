@@ -38,12 +38,19 @@
 
 (defonce answers (atom '{}))
 
+(def roles
+  {:software-engineer "You are an experienced Software Engineer. "})
+
 (defn gpt-ask-handler
   [{::system/keys [env]} request]
-  (let [{:keys [question check-en-grammar]} (:params request)
-        q (if check-en-grammar
-            (str "Check the English grammar for the following:\n" question)
-            question)
+  (let [{:keys [question check-en-grammar translate-to-ua role]} (:params request)
+        question (if (some? role)
+                   (str (get roles (keyword role)) question)
+                   question)
+        q (cond
+            (some? check-en-grammar) (str "Check the English grammar for the following:\n" question)
+            (some? translate-to-ua) (str "Translate the following to Ukrainian:\n" question)
+            :else question)
         response (ask-gpt env q)
         id (:id response)
         created (t/format (t/formatter "yyyy-MMMM-dd HH:mm:ss") (t/date-time))
@@ -52,6 +59,7 @@
                      :message
                      :content)
         email (-> request :session :identity)]
+    (log/info (str :question- question) :role- role)
     (swap! answers update-in [email] conj {:id id
                                            :created created
                                            :content content
@@ -85,13 +93,18 @@
                [:form {:method "post"
                        :action "/gpt/ask"}
                 (h/raw (anti-forgery/anti-forgery-field))
+                [:label {:for "role"} "Role:"]
+                [:input {:list "role" :name "role"}]
+                [:datalist {:id "role"}
+                 [:option {:value "software-engineer"} "Software Engineer"]]
                 [:label {:for "question"} "Question"]
                 [:br]
                 [:textarea {:id "question" :name "question" :type "text" :rows "10" :placeholder "Type your question.."}]
                 [:br]
                 [:div
-                 [:input {:type "submit" :name "default-submit"}]
-                 [:input {:type "submit" :name "check-en-grammar" :value "Check English grammar"}]]]
+                 [:input {:type "submit" :name "default-submit" :value "Ask"}]
+                 [:input {:type "submit" :name "check-en-grammar" :value "Check English grammar"}]
+                 [:input {:type "submit" :name "translate-to-ua" :value "Translate to Ukrainian"}]]]
                [:br]
                [:h1 "Previous answers:"]
                [:form {:method "post"
