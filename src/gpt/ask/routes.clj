@@ -104,9 +104,9 @@
                                  :padding "5px"}}
                    [:div (:created answer) " - " (:question answer)]
                    [:hr]
-                   [:div (->> (:content answer)
-                              md/md->hiccup
-                              md/component)]])]]]))}))
+                   [:div (some->> (:content answer)
+                                  md/md->hiccup
+                                  md/component)]])]]]))}))
 
 (def read-allowed-emails
   (memoize
