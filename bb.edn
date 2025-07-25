@@ -2,7 +2,7 @@
  {:requires ([babashka.fs :as fs])
   start {:doc "start main"
          :task (shell "clojure -M -m gpt.main")}
-  start-jar {:task (do
+  jar-start {:task (do
                      (shell "cp .env target/.env")
                      (let [jar-file (->> (fs/glob "target" "ask-gpt*.jar")
                                          first
@@ -13,10 +13,10 @@
               :task (shell "clojure -M:format -m cljfmt.main fix src")}
   format-check {:doc "check project formatting"
                 :task (shell "clojure -M:format -m cljfmt.main check src")}
-  build-jar {:doc "build uberjar"
-             :task (shell "clj -T:build uber")}
-  build-clean {:doc "clean build artifacts"
-               :task (shell "clj -T:build clean")}
+  uber {:doc "build uberjar"
+        :task (shell "clj -T:build uber")}
+  clean {:doc "clean build artifacts"
+         :task (shell "clj -T:build clean")}
   nrepl {:doc "run nrepl +flowstorm profile"
          :task (shell "clojure -M:flowstorm:dev -m nrepl.cmdline")}
   nrepl-no-flowstorm {:doc "start nrepl"
