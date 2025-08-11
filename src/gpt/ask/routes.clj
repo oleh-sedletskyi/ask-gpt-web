@@ -33,8 +33,7 @@
                        :messages [{:role "system",
                                    :content "You are a helpful assistant."},
                                   {:role "user",
-                                   :content question}]
-                       "temperature" 0.7})})
+                                   :content question}]})})
    :body
    (json/decode keyword)))
 
@@ -157,5 +156,9 @@
         (str/split #"\s")
         set))
   (swap! answers update-in [:test-user] conj {:k :test})
+
+  ;; start system from user ns
+  (ask-gpt (::system/env user/system) "Tell me a joke")
+
   ;;
   )
