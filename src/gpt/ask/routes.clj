@@ -6,9 +6,8 @@
    [gpt.layout :as layout]
    [gpt.system :as-alias system]
    [hiccup2.core :as h]
-   [java-time :as time]
    [tick.core :as t]
-   [markdown-to-hiccup.core :as md] ;; [gpt.middleware :as middleware]
+   [markdown-to-hiccup.core :as md]
    [org.httpkit.client :as hk-client]
    [ring.util.anti-forgery :as anti-forgery]
    [ring.util.response :as response])
@@ -19,6 +18,9 @@
   (or (System/getenv "OPEN_AI_KEY")
       (Dotenv/.get env "GPTKEY")))
 
+(def ai-models ["gpt-5"
+                "gpt-4.1-2025-04-14"])
+
 (defn ask-gpt [env question]
   (->
    @(hk-client/post "https://api.openai.com/v1/chat/completions"
@@ -27,7 +29,7 @@
                       "Authorization" (format "Bearer %s" (get-open-ai-key env))}
                      :body
                      (json/encode
-                      {:model "gpt-4.1-2025-04-14"
+                      {:model (first ai-models)
                        :messages [{:role "system",
                                    :content "You are a helpful assistant."},
                                   {:role "user",
