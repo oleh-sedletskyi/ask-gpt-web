@@ -18,7 +18,8 @@
   (or (System/getenv "OPEN_AI_KEY")
       (Dotenv/.get env "GPTKEY")))
 
-(def ai-models ["gpt-5"
+(def ai-models ["gpt-5-mini"
+                "gpt-5"
                 "gpt-4.1-2025-04-14"])
 
 (defn ask-gpt [env question]
